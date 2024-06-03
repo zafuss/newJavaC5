@@ -1,0 +1,87 @@
+package com.hutech.testc5.Services;
+
+import com.hutech.testc5.Entities.Role;
+import com.hutech.testc5.Entities.User;
+import com.hutech.testc5.Repositories.RoleRepository;
+import com.hutech.testc5.Repositories.UserRepository;
+import com.hutech.testc5.RequestEntities.RegisterUser;
+import com.hutech.testc5.RequestEntities.RequestUser;
+import com.hutech.testc5.RequestEntities.RequestUserUpdate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+    public User findById(String id) {
+        return userRepository.findById(id).get();
+    }
+    public User CreateUser(RequestUser requestUser) {
+        try {
+            User user = new User();
+            user.setUsername(requestUser.getUsername());
+            user.setPassword(requestUser.getPassword());
+            user.setEmail(requestUser.getEmail());
+            user.setFirstName(requestUser.getFirstName());
+            user.setLastName(requestUser.getLastName());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(requestUser.getBirthDate());
+            user.setBirthDay(date);
+            user.setEnabled(true);
+            Role role = roleRepository.findOneByName("USER");
+            user.setRole(role);
+            return userRepository.save(user);
+        }catch (Exception e){
+            throw  new RuntimeException(e.getMessage());
+        }
+    }
+    public User UpdateUser(RequestUserUpdate requestUserUpdate) {
+        try {
+            User user = userRepository.findById(requestUserUpdate.getId()).get();
+            user.setFirstName(requestUserUpdate.getFirstName());
+            user.setLastName(requestUserUpdate.getLastName());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(requestUserUpdate.getBirthDay());
+            user.setBirthDay(date);
+            user.setPassword(requestUserUpdate.getPassword());
+            user.setEmail(requestUserUpdate.getEmail());
+            user.setRole(requestUserUpdate.getRole());
+            return userRepository.save(user);
+        }catch (Exception e){
+            throw  new RuntimeException(e.getMessage());
+        }
+    }
+    public User RegisterUser(RegisterUser requestUser) {
+        User user = new User();
+        user.setEmail(requestUser.getEmail());
+        user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
+        user.setUsername(requestUser.getUsername());
+        user.setRole(roleRepository.findOneByName("USER"));
+        return userRepository.save(user);
+    }
+    public User getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            return (User) principal;
+        }
+        throw new SecurityException("You do not have permission to access this resource");
+    }
+}
