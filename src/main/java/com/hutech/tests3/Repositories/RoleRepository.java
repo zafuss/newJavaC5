@@ -1,7 +1,7 @@
-package com.hutech.testc5.Repositories;
+package com.hutech.tests3.Repositories;
 
 
-import com.hutech.testc5.Entities.Role;
+import com.hutech.tests3.Entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,4 +1,4 @@
-package com.hutech.testc5.RequestEntities;
+package com.hutech.tests3.RequestEntities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

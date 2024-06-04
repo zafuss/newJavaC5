@@ -1,9 +1,9 @@
-package com.hutech.testc5.Controllers;
+package com.hutech.tests3.Controllers;
 
-import com.hutech.testc5.RequestEntities.RequestUser;
-import com.hutech.testc5.RequestEntities.RequestUserUpdate;
-import com.hutech.testc5.Services.RoleService;
-import com.hutech.testc5.Services.UserService;
+import com.hutech.tests3.RequestEntities.RequestUser;
+import com.hutech.tests3.RequestEntities.RequestUserUpdate;
+import com.hutech.tests3.Services.RoleService;
+import com.hutech.tests3.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

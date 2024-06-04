@@ -1,4 +1,4 @@
-package com.hutech.testc5;
+package com.hutech.tests3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

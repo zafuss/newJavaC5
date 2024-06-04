@@ -1,6 +1,6 @@
-package com.hutech.testc5.RequestEntities;
+package com.hutech.tests3.RequestEntities;
 
-import jakarta.persistence.Column;
+import com.hutech.tests3.Entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestUser {
-    private String username;
+public class RequestUserUpdate {
+    private String id;
     private String password;
     private String email;
     private String firstName;
     private String lastName;
-    private String birthDate;
+    private String birthDay;
+    private Role role;
 }

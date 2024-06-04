@@ -1,4 +1,4 @@
-package com.hutech.testc5;
+package com.hutech.tests3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

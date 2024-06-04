@@ -1,11 +1,10 @@
-package com.hutech.testc5.Entities;
+package com.hutech.tests3.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,7 +14,6 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@DynamicUpdate
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

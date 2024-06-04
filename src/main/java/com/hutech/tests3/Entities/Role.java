@@ -1,4 +1,4 @@
-package com.hutech.testc5.Entities;
+package com.hutech.tests3.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;

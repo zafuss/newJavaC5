@@ -1,16 +1,12 @@
-package com.hutech.testc5.Services;
+package com.hutech.tests3.Services;
 
-import com.hutech.testc5.Entities.Role;
-import com.hutech.testc5.Entities.User;
-import com.hutech.testc5.Repositories.RoleRepository;
-import com.hutech.testc5.Repositories.UserRepository;
-import com.hutech.testc5.RequestEntities.RegisterUser;
-import com.hutech.testc5.RequestEntities.RequestUser;
-import com.hutech.testc5.RequestEntities.RequestUserUpdate;
+import com.hutech.tests3.Entities.Role;
+import com.hutech.tests3.Entities.User;
+import com.hutech.tests3.Repositories.RoleRepository;
+import com.hutech.tests3.Repositories.UserRepository;
+import com.hutech.tests3.RequestEntities.RequestUser;
+import com.hutech.tests3.RequestEntities.RequestUserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -24,8 +20,6 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -67,21 +61,5 @@ public class UserService {
         }catch (Exception e){
             throw  new RuntimeException(e.getMessage());
         }
-    }
-    public User RegisterUser(RegisterUser requestUser) {
-        User user = new User();
-        user.setEmail(requestUser.getEmail());
-        user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
-        user.setUsername(requestUser.getUsername());
-        user.setRole(roleRepository.findOneByName("USER"));
-        return userRepository.save(user);
-    }
-    public User getCurrentUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof User) {
-            return (User) principal;
-        }
-        throw new SecurityException("You do not have permission to access this resource");
     }
 }
