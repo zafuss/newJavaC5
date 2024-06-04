@@ -4,9 +4,12 @@ import com.hutech.tests3.Entities.Role;
 import com.hutech.tests3.Entities.User;
 import com.hutech.tests3.Repositories.RoleRepository;
 import com.hutech.tests3.Repositories.UserRepository;
+import com.hutech.tests3.RequestEntities.RegisterUser;
 import com.hutech.tests3.RequestEntities.RequestUser;
 import com.hutech.tests3.RequestEntities.RequestUserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -20,6 +23,7 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -61,5 +65,13 @@ public class UserService {
         }catch (Exception e){
             throw  new RuntimeException(e.getMessage());
         }
+    }
+    public User RegisterUser(RegisterUser registerUser) {
+        User user = new User();
+        user.setUsername(registerUser.getUsername());
+        user.setPassword(new BCryptPasswordEncoder().encode(registerUser.getPassword()));
+        user.setEmail(registerUser.getEmail());
+        user.setRole(roleRepository.findOneByName("USER"));
+        return userRepository.save(user);
     }
 }

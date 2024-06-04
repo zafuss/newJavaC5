@@ -1,5 +1,7 @@
 package com.hutech.tests3.Config;
 
+import com.hutech.tests3.Services.CustomUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,28 +20,28 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(
                 request->request
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/users").hasRole("USER")
-                        .requestMatchers("/users/**").hasRole("MODIFIER")
-                        .requestMatchers("/roles").hasRole("ADMIN")
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/users").hasAuthority("USER")
+                        .requestMatchers("/users/**").hasAuthority("MODIFIER")
+                        .requestMatchers("/roles").hasAuthority("ADMIN")
                         .anyRequest().permitAll()
         ).formLogin(AbstractConfiguredSecurityBuilder
-                ->AbstractConfiguredSecurityBuilder.permitAll()
+                ->AbstractConfiguredSecurityBuilder.loginPage("/login")
+                .successHandler(new HandleSuccessLogin())
+                .permitAll()
         ).build();
     }
-    @Bean
+
     public UserDetailsService UserDetailsService() {
-        UserDetails user = User.builder()
-                .username("user").password("password").roles("USER").build();
-        UserDetails modifier = User.builder()
-                .username("modifier").password("password").roles("MODIFIER").build();
-        UserDetails admin = User.builder()
-                .username("admin").password(passwordEncoder().encode("password")).roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(user, modifier, admin);
+        return customUserDetailService;
     }
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
