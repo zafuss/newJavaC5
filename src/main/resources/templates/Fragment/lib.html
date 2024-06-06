@@ -9,16 +9,20 @@
 <header th:fragment="nav">
   <nav>
     <ul>
-      <li sec:authentication="principal.authorities"  ></li>
+      <li sec:authorize="isAuthenticated()">
+          <p th:text="'em chao anh '+${#authentication.principal.getDisplayName()}"></p>
+      </li>
+      <li sec:authorize="isAnonymous()">
+        <p>dang nhap di</p>
+      </li>
       <li><a th:href="@{/}">Home</a></li>
       <li><a th:href="@{/about}">About</a></li>
       <li><a th:href="@{/contact}">Contact</a></li>
       <li><a th:href="@{/login}">Login</a></li>
       <li><a th:href="@{/login}">USER</a></li>
-      <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/login}">ADMIN</a></li>
-      <li sec:authorize="hasAuthority('MODIFIER')"><a th:href="@{/login}">MODIFIER</a></li>
-      <li sec:authorize="isAuthenticated()"><a th:href="@{/login}">AUTHENTICATED</a></li>
-      <li><a th:href="@{/login}">ANONYMOUS</a></li>
+      <li sec:authorize="hasAnyRole('ADMIN')"><a th:href="@{/login}">ADMIN</a></li>
+      <li sec:authorize="hasAnyRole('MODIFIER')"><a th:href="@{/login}">MODIFIER</a></li>
+
     </ul>
   </nav>
 </header>
