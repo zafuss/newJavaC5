@@ -1,5 +1,6 @@
 package com.hutech.tests3.Services;
 
+import com.hutech.tests3.Config.Utility;
 import com.hutech.tests3.Entities.Role;
 import com.hutech.tests3.Entities.User;
 import com.hutech.tests3.Repositories.RoleRepository;
@@ -78,4 +79,23 @@ public class UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         return userRepository.save(user);
     }
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    public User createTokenResetPassword(User user) {
+        String token = Utility.generateRandomString(45);
+        user.setResetPasswordToken(token);
+        user.setResetPasswordTokenExpired(new Date(System.currentTimeMillis()+10*60*1000));
+        return userRepository.save(user);
+    }
+    public User findUserByResetPasswordToken(String token) {
+        return userRepository.findByToken(token);
+    }
+    public User updateResetPasswordToken(User user, String password) {
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        user.setResetPasswordToken("");
+        user.setResetPasswordTokenExpired(null);
+        return userRepository.save(user);
+    }
+
 }
