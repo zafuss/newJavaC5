@@ -74,4 +74,8 @@ public class UserService {
         user.setRole(roleRepository.findOneByName("USER"));
         return userRepository.save(user);
     }
+    public User ChangePassword(User user, String password){
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
+        return userRepository.save(user);
+    }
 }
