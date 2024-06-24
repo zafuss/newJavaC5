@@ -26,6 +26,22 @@
     </ul>
   </nav>
 </header>
-
+<div th:fragment="setMenu(menus)">
+  <ul th:each="menu : ${menus}">
+    <li th:if="${menu.parent==null}">
+      <a th:href="${menu.url}" th:text="${menu.name}"></a>
+      <ul th:each="submenu:${menus}">
+        <li th:if="${submenu.parent==menu}">
+          <a th:href="${submenu.url}" th:text="${submenu.name}"></a>
+          <ul th:each="gradmenu: ${menus}">
+            <li th:if="${gradmenu.parent==submenu}">
+              <a th:href="${gradmenu.url}" th:text="${submenu.name}"></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
 </body>
 </html>

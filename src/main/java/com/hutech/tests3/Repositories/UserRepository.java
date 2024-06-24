@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByEmail(String email);
     @Query("select u from User u where u.resetPasswordToken=?1")
     User findByToken(String token);
+    @Query("select u.countFail from User u where  u.username=?1")
+    int countFail(String username);
 }

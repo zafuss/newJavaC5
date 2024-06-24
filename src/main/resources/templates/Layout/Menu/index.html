@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr th:each="menu : ${menus}">
+        <td th:text="${menu.name}"></td>
+        <td th:text="${menu.url}"></td>
+        <td th:text="${menu.parent?.name}"></td>
+    </tr>
+</table>
+<div th:replace="Fragment/lib.html::setMenu(${menus})">
+</div>
+</body>
+</html>

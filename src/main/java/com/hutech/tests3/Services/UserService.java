@@ -97,5 +97,33 @@ public class UserService {
         user.setResetPasswordTokenExpired(null);
         return userRepository.save(user);
     }
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    public void UpdateCountFail(User user) {
+        if (user.isEnabled()) {
+            int count = userRepository.countFail(user.getUsername());
+            count += 1;
+            user.setCountFail(count);
+            if (count == 4) {
+                user.setEnabled(false);
+                user.setCountFail(0);
+                user.setLockExpired(new Date(System.currentTimeMillis() + 10 * 2 * 1000));
+            }
+        } else {
+            if (user.getLockExpired() != null) {
+                if (user.getLockExpired().getTime() < System.currentTimeMillis()) {
+                    user.setLockExpired(null);
+                    user.setEnabled(true);
+                }
+            }
+        }
+        userRepository.save(user);
+    }
+    public void resetLockAccount(User user){
+        user.setCountFail(0);
+        user.setLockExpired(null);
+        userRepository.save(user);
+    }
 
 }

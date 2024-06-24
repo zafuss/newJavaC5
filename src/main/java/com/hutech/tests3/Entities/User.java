@@ -33,4 +33,7 @@ public class User {
     private Role role;
     private String resetPasswordToken;
     private Date resetPasswordTokenExpired;
+
+    private int countFail;
+    private Date lockExpired;
 }

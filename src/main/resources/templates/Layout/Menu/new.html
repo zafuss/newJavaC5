@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="'/menus/new'" method="post" th:object="${menu}">
+    <input name="name" th:field="*{name}"/>
+    <input name="url" th:field="*{url}">
+    <select th:field="*{parent}">
+        <option text="" value=""></option>
+        <option th:each="menu:${menus}" th:text="${menu.name}"
+                th:value="${menu.id_menu}"></option>
+    </select>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

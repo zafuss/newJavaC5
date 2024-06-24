@@ -48,4 +48,9 @@ public class CustomUserDetail implements UserDetails {
         int index = role.indexOf(role);
         return Arrays.stream(roles.substring(index).split(",")).toList();
     }
+
+    @Override
+    public boolean isEnabled() {
+        return user.isEnabled();
+    }
 }

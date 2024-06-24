@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.AbstractConfiguredSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,6 +30,10 @@ public class SecurityConfig {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private SuccessHandle successHandle;
+    @Autowired
+    private FailureHandle failureHandle;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -42,7 +47,8 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
         ).formLogin(AbstractConfiguredSecurityBuilder
                 ->AbstractConfiguredSecurityBuilder.loginPage("/login")
-                .successHandler(new HandleSuccessLogin())
+                .successHandler(successHandle)
+                        .failureHandler(failureHandle)
                 .permitAll()
         ).rememberMe(remember->remember.tokenRepository(persistentTokenRepository())
                         .tokenValiditySeconds(1000*10*60))
@@ -50,6 +56,7 @@ public class SecurityConfig {
     }
 
     public UserDetailsService UserDetailsService() {
+
         return customUserDetailService;
     }
     @Bean
