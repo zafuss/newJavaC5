@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="'/categories/new'" method="post" th:object="${category}">
+    <input name="name" th:field="*{name}">
+    <input type="submit" value="save">
+</form>
+</body>
+</html>
