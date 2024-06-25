@@ -8,7 +8,7 @@ fetch("http://localhost:8080/api/menu")
         if (menu.parent === null) {
             let listItem = document.createElement("li");
             let link = document.createElement("a");
-            link.href = menu.url; // Cần thay đổi href tương ứng với dữ liệu trong API
+            link.href = menu.url;
             link.innerHTML = menu.name;
             listItem.appendChild(link);
             menuhtml.appendChild(listItem);
