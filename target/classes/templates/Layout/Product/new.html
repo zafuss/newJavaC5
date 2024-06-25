@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${product}" th:action="'/products/new'" method="post">
+    <table>
+        <tr>
+            <td>
+                name
+            </td>
+            <td>
+                <input type="input" name="name" th:field="*{name}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                description
+            </td>
+            <td>
+                <input type="input" name="description" th:field="*{description}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                price
+            </td>
+            <td>
+                <input type="number" th:field="*{price}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                quantity
+            </td>
+            <td>
+                <input type="number" th:field="*{quantity}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                status
+            </td>
+            <td>
+                <input type="checkbox" th:field="*{enabled}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                brand
+            </td>
+            <td>
+                <input type="input" name="brand" th:field="*{brand}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                GPU
+            </td>
+            <td>
+                <input type="input" name="GPU" th:field="*{GPU}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                RAM
+            </td>
+            <td>
+                <input type="input" name="RAM" th:field="*{RAM}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ROM
+            </td>
+            <td>
+                <input type="input" name="ROM" th:field="*{ROM}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CPU
+            </td>
+            <td>
+                <input type="input" name="CPU" th:field="*{CPU}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Category
+            </td>
+            <td>
+                <select th:field="*{category}">
+                    <option  th:each="category : ${categories}"
+                             th:value="${category.cate_id}" th:text="${category.name}"
+                    ></option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="save">
+</form>
+</body>
+</html>
